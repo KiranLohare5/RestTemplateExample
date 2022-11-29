@@ -7,6 +7,17 @@ public class OutputResponse {
 	private String lng;
 	private String company;
 	private String phone;
+	
+	
+	
+	public OutputResponse(String title, String body, String lat, String lng, String company, String phone) {
+		this.title = title;
+		this.body = body;
+		this.lat = lat;
+		this.lng = lng;
+		this.company = company;
+		this.phone = phone;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -42,5 +53,10 @@ public class OutputResponse {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	@Override
+	public String toString() {
+		return "OutputResponse [title=" + title + ", body=" + body + ", lat=" + lat + ", lng=" + lng + ", company="
+				+ company + ", phone=" + phone + "]";
 	}
 }

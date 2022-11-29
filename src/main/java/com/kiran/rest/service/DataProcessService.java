@@ -12,34 +12,26 @@ import com.kiran.rest.entity.UserValues;
 
 @Service
 public class DataProcessService {
-	
+
 	@Autowired
 	private DataService service;
-	
+
 	public DataProcessService(DataService service) {
 		this.service = service;
 	}
 
 	public List<OutputResponse> processedData() {
-		OutputResponse outputResponse=new OutputResponse();
-		List<OutputResponse> outputResponses=new ArrayList<OutputResponse>();
+
+		List<OutputResponse> outputResponses = new ArrayList<OutputResponse>();
 		List<UserValues> userApi = service.userApi();
 		List<PostValues> postApi = service.postApi();
-		
-		for (UserValues userValues : userApi) 
-		{
-			for (PostValues postValues : postApi) 
-			{
-				if(userValues.getId().equals(postValues.getId()))
-				{
-					outputResponse.setTitle(postValues.getTitle());
-					outputResponse.setBody(postValues.getBody());
-					outputResponse.setLat(userValues.getAddress().getGeo().getLat());
-					outputResponse.setLng(userValues.getAddress().getGeo().getLng());
-					outputResponse.setCompany(userValues.getCompany().getName());
-					outputResponse.setPhone(userValues.getPhone());
+		for (PostValues postValues : postApi) {
+			for (UserValues userValues : userApi) {
+				if (userValues.getId().equals(postValues.getId())) {
+					outputResponses.add(new OutputResponse(postValues.getTitle(), postValues.getBody(),
+							userValues.getAddress().getGeo().getLat(), userValues.getAddress().getGeo().getLng(),
+								userValues.getCompany().getName(), userValues.getPhone()));
 				}
-				outputResponses.add(outputResponse);
 			}
 		}
 		return outputResponses;
